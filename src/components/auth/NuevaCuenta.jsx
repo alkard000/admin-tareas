@@ -27,6 +27,10 @@ const NuevaCuenta = () => {
         
         //VALIDAR PARA QUE NO HAYA CAPOS VACIOS
 
+        //PASSWORD MINIMOS DE 6 CARACTERES
+
+        //LOS 2 PASSWORD SEAN IGUALES   
+
 
         //PASARLO A LA ACTION
     }
