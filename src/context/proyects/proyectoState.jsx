@@ -1,11 +1,16 @@
-import React, {useReducer} from 'react'
+import React, {useReducer} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 import proyectoContext from './proyectoContext';
 import proyectoReducer from './proyectoReducer';
 
 import {
     FORMULARIO_PROYECTO, 
-    OBTENER_PROYECTOS
+    OBTENER_PROYECTOS,
+    AGREGAR_PROYECTO,
+    VALIDAR_FORMULARIO,
+    PROYECTO_ACTUAL,
+    ELIMINAR_PROYECTO
 } from '../../types';
 
 const ProyectoState = props => {
@@ -18,7 +23,9 @@ const ProyectoState = props => {
 
     const initialState = {
         proyectos : [],
-        formulario : false
+        formulario : false,
+        errorformulario : false,
+        proyecto : null
     }
 
     //DISPATCH PARA EJECUTAR LAS ACCIONES
@@ -39,13 +46,55 @@ const ProyectoState = props => {
         })
     }
 
+    //AGREGAR NUEVO PROYECTO
+    const agregarProyecto = proyecto => {
+        proyecto.id = uuidv4();
+
+        //INSERTAR EL PROYECTO EN EL STATE
+        dispatch({
+            type : AGREGAR_PROYECTO,
+            payload : proyecto
+        })
+    }
+
+    //VALIDA EL FORMULARIO POR ERRORE
+    const mostrarError = () => {
+        dispatch({
+            type : VALIDAR_FORMULARIO
+        })
+    }
+
+    //SELECCIONAR EL PROYECTO EN EL QUE S EDIO CLICK
+    const proyectoActual = proyectoId => {
+        dispatch({
+            type : PROYECTO_ACTUAL,
+            payload : proyectoId
+        })
+    }
+
+    //ELIMINAR UN PROYECTO
+    const eliminarProyecto = proyectoId => {
+        dispatch({
+            type : ELIMINAR_PROYECTO,
+            payload : proyectoId
+        })
+    }
+
     return(
         <proyectoContext.Provider
             value={{
+                //STATE
                 proyectos : state.proyectos,
                 formulario : state.formulario,
+                errorformulario : state.errorformulario,
+                proyecto : state.proyecto,
+                //FUNCIONES
                 mostrarFormulario,
-                obtenerProyecto
+                obtenerProyecto,
+                agregarProyecto,
+                mostrarError,
+                proyectoActual,
+                eliminarProyecto
             }}
         >
             {props.children}

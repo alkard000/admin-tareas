@@ -1,7 +1,20 @@
-import React, {Fragment} from 'react';
+import React, {useContext, Fragment} from 'react';
+
+import proyectoContext from '../../context/proyects/proyectoContext';
+
 import Tarea from './Tarea';
 
 const ListadoTareas = () => {
+
+    //OBTENER EL STATE DEL FORMULARIO
+    const proyectosContext = useContext(proyectoContext);
+    const {proyecto, eliminarProyecto} = proyectosContext;
+
+    //SI NO HAY PROYECTO SELECCIONADO
+    if(!proyecto) return <h2>Selecciona un poryecto</h2>;
+
+    //ARRAY DESTRUCTURING PARA EXTRAER EL PROYECTO
+    const [proyectoActual] = proyecto;
 
     const tareasProyecto = [
         {nombre : 'Elegir plataforma', estado : true},
@@ -10,9 +23,14 @@ const ListadoTareas = () => {
         {nombre : 'Elegir clientes', estado : true}
     ]
 
+    //ELIMINAR UN PROYECTO
+    const handleClickEliminar = () => {
+        eliminarProyecto(proyectoActual.id);
+    }
+
     return (  
         <Fragment>
-            <h2>Proyecto : Tienda Virtual</h2>
+            <h2>Proyecto : {proyectoActual.nombre} </h2>
 
             <ul className="listado-tareas">
                 {tareasProyecto.length === 0
@@ -28,6 +46,7 @@ const ListadoTareas = () => {
             <button
                 type='button'
                 className='btn btn-eliminar'
+                onClick={handleClickEliminar}
             >Eliminar Proyecto &times;</button>
         </Fragment>
     );
