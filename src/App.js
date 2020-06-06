@@ -14,7 +14,7 @@ import RutaPrivada from './components/rutas/RutaPrivada';
 import tokenAuth from './config/tokenAuth';
 
 //REVISAR SI HAY UN TOKEN
-const token = localStorage.getItem('tokne');
+const token = localStorage.getItem('token');
 
 if(token){
   tokenAuth(token);
