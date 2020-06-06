@@ -1,14 +1,29 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 
 import {Link} from 'react-router-dom';
 
 import AlertaContext from '../../context/alertas/alertaContext';
+import AuthContext from '../../context/autenticacion/authContext';
 
-const NuevaCuenta = () => {
+const NuevaCuenta = (props) => {
 
     //EXTRAER LOS VALORES DEL CONTEXT
     const alertasContext = useContext(AlertaContext);
     const {alerta, mostrarAlerta} = alertasContext;
+
+    //CONTEXT DE AUTENTICACION
+    const authContext = useContext(AuthContext);
+    const {mensaje, autenticado, registrarUsuario} = authContext;
+
+    //EN CASO DE QUE EL USUARIO SE REGISTRE O AUTENTICADO
+    useEffect(() => {
+        if(autenticado){
+            props.history.push('/proyectos');
+        }
+        if(mensaje){
+            mostrarAlerta(mensaje.msg, mensaje.categoria);
+        }
+    }, [mensaje, autenticado, props.history]);
 
     const [usuario, setUsuario] = useState({
         nombre : '',
@@ -54,6 +69,11 @@ const NuevaCuenta = () => {
         }
 
         //PASARLO A LA ACTION
+        registrarUsuario({
+            nombre, 
+            email, 
+            password
+        });
     }
 
     return (  
