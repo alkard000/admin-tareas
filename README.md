@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Link of this proyect in netlify : https://add-tareas-mern.netlify.app/
+
+This proyect was made with React Context, JsonWebToken and the backend(API) was made with NODEjs
+
 ## Available Scripts
 
 In the project directory, you can run:
